@@ -1,0 +1,51 @@
+#+OPTIONS: toc:2 
+
+* Flow Data Analysis
+
+** Brief Conclusions
+- The first two 4xCGG and 5xCGG pauses have a smaller effect on protein expression than the next 3 4xCGG and 5xCGG pauses.
+- The first 3xCGG is abnormally low. This might be a technical or cloning error. Make a note of this in the lab strain and plasmid database. Ignore this for now since we are not using the 3xCGG single variants for making double variants.
+- Next step is to test the effect of double 4xCGG and double 5xCGG variants and compare them to the single variant data.
+
+
+** Analysis Pipeline
+Convert the =.fcs= files to =.csv= files.
+#+BEGIN_SRC sh :exports code
+Rscript scripts/fcsToCsv.R
+#+END_SRC
+
+Plot histogram of all channels (except time) for a subset of samples.
+#+BEGIN_SRC sh :exports code
+cd scripts
+python plotHistogram.py
+#+END_SRC
+
+Plot scatterplot of select channel pairs for a subset of samples.
+#+BEGIN_SRC sh :exports code
+cd scripts
+python plotScatter.py
+#+END_SRC
+
+Calculate summary statistics for each sample.
+#+BEGIN_SRC sh :exports code
+cd scripts
+python calculateSummaryStatistics.py
+#+END_SRC
+
+Plot ratio of yfp to rfp for samples that have mkate
+#+BEGIN_SRC sh :exports code
+cd scripts
+python plotYfpRfpRatio.py
+#+END_SRC
+
+** Analysis Results
+
+*** Histogram of raw data for 4 channels for first 10 samples
+#+ATTR_HTML: :width 100
+[[file:fig/histogram.png]]
+
+*** Scatter plot of YFP vs RFP for first 10 samples
+[[fig/scatterplot.png]]
+
+*** Bar plot of YFP / RFP, averaged over replicates (last number) and standard error of mean
+[[fig/yfprfpratio.png]]
